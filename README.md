@@ -1,6 +1,6 @@
 # Tanks_LibGDX
-> AITU Course Project 
-> Like the Tanks 1990
+> AITU Course Project. 
+> Like the Tanks 1990.
 
 
 ## Project Description
