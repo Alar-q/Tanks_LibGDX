@@ -106,7 +106,7 @@ You can then open a browser to http://localhost:8000 and see your project in act
 
 Node.js 
 ```sh
-$ npm install http-server -g then 
+$ npm install http-server -g 
 $ http-server html/build/dist 
 ```
 and browse at http://localhost:8080. docs
