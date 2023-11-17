@@ -42,12 +42,12 @@ $ cd ./Tanks_LibGDX
 
 The easiest way to deploy to Windows/Linux/Mac is to create a runnable JAR file. 
 
-This can be done via the following console command: 
+This can be done via the following console command:
 ```sh
 $ ./gradlew desktop:dist
 ```
 
-The generated JAR file will be located in the desktop/build/libs/ folder. 
+The generated JAR file will be located in the `desktop/build/libs/` folder. 
 It contains all necessary code as well as all your art assets from the android/assets folder 
 and can be run either by double clicking or on the command line via 
 ```sh
@@ -67,9 +67,12 @@ A very convenient way to distribute java application is to just bundle an JRE. [
 $ ./gradlew android:assembleRelease
 ```
 
-This will create an unsigned APK file in the android/build/outputs/apk folder. 
+This will create an unsigned APK file in the `android/build/outputs/apk folder`.
+
 Before you can install or publish this APK, you must sign it. 
-The APK build by the above command is already in release mode, you only need to follow the steps for keytool and jarsigner. 
+The APK build by the above command is already in release mode, 
+you only need to follow the steps for keytool and jarsigner. 
+
 You can install this APK file on any Android device that allows installation from unknown sources.
 
 
@@ -78,14 +81,17 @@ You can install this APK file on any Android device that allows installation fro
 ```sh
 $ gradlew html:dist
 ```
-This will compile your app to Javascript and place the resulting Javascript, HTML and asset files in the html/build/dist/ folder. 
+This will compile your app to Javascript and place the resulting 
+Javascript, HTML and asset files in the `html/build/dist/` folder. 
 The contents of this folder have to be served up by a web server, e.g. Apache or Nginx. 
 Just treat the contents like you’d treat any other static HTML/Javascript site. 
+
 There is no Java or Java Applets involved!
 
-### Usage
+#### Usage
 
-With Python installed, you can test your distribution by executing the following in the html/build/dist folder:
+With Python installed, you can test your distribution 
+by executing the following in the `html/build/dist` folder:
 
 Python 3.x
 ```sh
