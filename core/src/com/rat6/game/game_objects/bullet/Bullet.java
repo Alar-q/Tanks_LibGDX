@@ -1,4 +1,4 @@
-package com.rat6.game.bullet;
+package com.rat6.game.game_objects.bullet;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

@@ -7,33 +7,19 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.rat6.game.boulder.BoulderWall;
-import com.rat6.game.bullet.BulletsHandler;
-import com.rat6.game.enemies.Enemies;
-import com.rat6.game.explosion.ExplosionsHandler;
-import com.rat6.game.map.GameMap;
-import com.rat6.game.map.GrassMap;
-import com.rat6.game.tank.Tank;
-import com.rat6.game.tank.TankBuilder;
-import com.rat6.game.tank.TankController;
+import com.rat6.game.world.StandardWorld;
 
 public class MyGdxGame extends ApplicationAdapter {
-	public static final float WORLD_WIDTH = 960;
-	public static final float WORLD_HEIGHT = 640;
+	public static final float 	WORLD_WIDTH = 960,
+								WORLD_HEIGHT = 640;
+
+	public static Assets assets;
 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport viewport;
 
-	public static Assets assets;
-	private Tank playerTank;
-	private TankController tankController;
-	public static BulletsHandler bulletsHandler;
-
-	private GameMap grassMap;
-	private BoulderWall boulder;
-
-	private Enemies enemies;
+	private StandardWorld standardWorld;
 
 	@Override
 	public void create() {
@@ -46,19 +32,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
 
 		assets = new Assets();
-		bulletsHandler = new BulletsHandler(assets);
 
-		playerTank = new TankBuilder()
-				.blueTank(assets)
-				.setPosition(100, 100) // Установите начальную позицию танка
-				.setSpeed(200) // Установите скорость танка
-				.build();
-		tankController = new TankController(playerTank);
-
-		enemies = new Enemies(assets);
-
-		grassMap = new GrassMap(assets);
-		boulder = new BoulderWall(assets, 0, 0);
+		standardWorld = new StandardWorld();
 	}
 
 	@Override
@@ -69,18 +44,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		tankController.update(); // слушатель кнопок, вызывает методы передвижения танка
-
-		enemies.update();
-		bulletsHandler.update();
-		boulder.update();
+		standardWorld.update();
 
 		batch.begin();
-		grassMap.render(batch);
-		playerTank.render(batch);
-		enemies.render(batch);
-		boulder.render(batch);
-		bulletsHandler.render(batch);
+		standardWorld.render(batch);
 		batch.end();
 	}
 

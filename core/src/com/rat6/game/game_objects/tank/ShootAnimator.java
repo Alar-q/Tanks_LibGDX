@@ -1,9 +1,9 @@
-package com.rat6.game.tank;
+package com.rat6.game.game_objects.tank;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.rat6.game.tank.enums.TankState;
+import com.rat6.game.game_objects.tank.enums.TankState;
 
 public class ShootAnimator {
     private Tank tank;

@@ -1,4 +1,4 @@
-package com.rat6.game.utils;
+package com.rat6.game.font;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

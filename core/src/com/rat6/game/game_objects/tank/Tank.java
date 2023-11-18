@@ -1,4 +1,4 @@
-package com.rat6.game.tank;
+package com.rat6.game.game_objects.tank;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.rat6.game.Assets;
-import com.rat6.game.MyGdxGame;
-import com.rat6.game.bullet.BulletsHandler;
-import com.rat6.game.tank.enums.TankDirection;
-import com.rat6.game.tank.enums.TankState;
+import com.rat6.game.game_objects.bullet.BulletsHandler;
+import com.rat6.game.game_objects.GameObject;
+import com.rat6.game.game_objects.tank.enums.TankDirection;
+import com.rat6.game.game_objects.tank.enums.TankState;
 
-public class Tank {
+public class Tank extends GameObject {
     private TextureRegion[] tankR, tankL, tankU, tankD;
     protected TextureRegion[] tankRShots, tankLShots, tankUShots, tankDShots;
 
@@ -27,18 +27,11 @@ public class Tank {
     private float stateTime;
 
     private ShootAnimator shootAnimator;
-    private BulletsHandler bulletsHandler;
     private Assets assets;
 
-    public Tank(TextureRegion[] r, TextureRegion[] l, TextureRegion[] u, TextureRegion[] d,
-                TextureRegion[] rShots, TextureRegion[] lShots, TextureRegion[] uShots, TextureRegion[] dShots,
-                float x, float y, float speed) {
-        this(MyGdxGame.assets, r, l, u, d, rShots, lShots, uShots, dShots, x, y, speed, MyGdxGame.bulletsHandler);
-    }
     protected Tank(Assets assets, TextureRegion[] r, TextureRegion[] l, TextureRegion[] u, TextureRegion[] d,
                    TextureRegion[] rShots, TextureRegion[] lShots, TextureRegion[] uShots, TextureRegion[] dShots,
-                   float x, float y, float speed,
-                   BulletsHandler bulletsHandler
+                   float x, float y, float speed
     ) {
         this.assets = assets;
         this.shootAnimator = new ShootAnimator(this);
@@ -77,9 +70,8 @@ public class Tank {
         this.animationL = new Animation<TextureRegion>(0.2f, l);
         this.animationU = new Animation<TextureRegion>(0.2f, u);
         this.animationD = new Animation<TextureRegion>(0.2f, d);
-
-        this.bulletsHandler = bulletsHandler;
-//        bulletsHandler.createBullet(this.center.y, this.center.y, direction, 0);
+        // Hello from android device
+        
     }
 
     public void moveLeft() {
@@ -141,7 +133,7 @@ public class Tank {
         state = TankState.IDLE;
     }
 
-    public void shoot(){
+    public void shoot(BulletsHandler bulletsHandler){
         if(state == TankState.DEAD){
             return;
         }
@@ -157,7 +149,7 @@ public class Tank {
         bulletsHandler.createBullet(bulletX, bulletY, direction, 500f);
     }
 
-    public void update(){
+    public void update(BulletsHandler bulletsHandler){
         if(bulletsHandler.hit(boundingBox)){
             state = TankState.DEAD;
         }

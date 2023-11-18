@@ -3,7 +3,7 @@ package com.rat6.game;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.rat6.game.utils.Font;
+import com.rat6.game.font.Font;
 
 public class Assets {
 

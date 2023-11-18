@@ -1,4 +1,4 @@
-package com.rat6.game.bullet;
+package com.rat6.game.game_objects.bullet;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.rat6.game.Assets;
 import com.rat6.game.explosion.ExplosionsHandler;
-import com.rat6.game.tank.enums.TankDirection;
+import com.rat6.game.game_objects.tank.enums.TankDirection;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -90,6 +90,24 @@ public class BulletsHandler {
             if (Intersector.overlaps(bulletCircle, rectangle)) {
                 it.remove(); // Удаляем пулю при обнаружении столкновения
                 explosionsHandler.createExplosion(rectangle.x, rectangle.y);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hit(Circle circle){
+//        for (int i = 0; i < bullets.size(); i++) {
+        for (Iterator<Bullet> it = bullets.iterator(); it.hasNext();) {
+
+//            Bullet b = bullets.get(i);
+            Bullet b = it.next();
+            Circle bulletCircle = b.getBoundingCircle();
+
+            // Проверяем, пересекается ли круг пули с прямоугольником
+            if (Intersector.overlaps(bulletCircle, circle)) {
+                it.remove(); // Удаляем пулю при обнаружении столкновения
+                explosionsHandler.createExplosion(circle.x, circle.y);
                 return true;
             }
         }

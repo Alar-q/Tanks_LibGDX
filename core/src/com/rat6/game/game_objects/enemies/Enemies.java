@@ -1,11 +1,11 @@
-package com.rat6.game.enemies;
+package com.rat6.game.game_objects.enemies;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.rat6.game.Assets;
 import com.rat6.game.MyGdxGame;
-import com.rat6.game.bullet.BulletsHandler;
-import com.rat6.game.tank.Tank;
-import com.rat6.game.tank.TankBuilder;
+import com.rat6.game.game_objects.bullet.BulletsHandler;
+import com.rat6.game.game_objects.tank.Tank;
+import com.rat6.game.game_objects.tank.TankBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,6 @@ import java.util.Random;
 
 public class Enemies {
     private List<Tank> enemyTanks;
-    private BulletsHandler bulletsHandler;
     private Random random;
     private float movementInterval;
 
@@ -21,7 +20,6 @@ public class Enemies {
 
     public Enemies(Assets assets) {
         this.assets = assets;
-        this.bulletsHandler = MyGdxGame.bulletsHandler;
         this.enemyTanks = new ArrayList<>();
         this.random = new Random();
         this.movementInterval = 1.0f; // Интервал передвижения врагов в секундах
@@ -53,7 +51,7 @@ public class Enemies {
         }
     }
 
-    public void update() {
+    public void update(BulletsHandler bulletsHandler) {
         for (Tank enemy : enemyTanks) {
             if (random.nextFloat() < 0.1) { // Случайная выборка для действий врагов
                 randomizeEnemyMovement(enemy);

@@ -1,12 +1,8 @@
-package com.rat6.game.tank;
+package com.rat6.game.game_objects.tank;
 
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.rat6.game.Assets;
-import com.rat6.game.bullet.Bullet;
-import com.rat6.game.bullet.BulletsHandler;
-
-import java.util.ArrayList;
 
 public class TankBuilder {
     // массивы анимаций

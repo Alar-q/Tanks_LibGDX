@@ -1,12 +1,6 @@
-package com.rat6.game.levels;
+package com.rat6.game.world;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.rat6.game.Assets;
 import com.rat6.game.game_objects.boulder.BoulderWall;
 import com.rat6.game.game_objects.bullet.BulletsHandler;
 import com.rat6.game.game_objects.enemies.Enemies;
@@ -16,15 +10,9 @@ import com.rat6.game.game_objects.tank.Tank;
 import com.rat6.game.game_objects.tank.TankBuilder;
 import com.rat6.game.game_objects.tank.TankController;
 
-public class Level {
-    public static final float WORLD_WIDTH = 960;
-    public static final float WORLD_HEIGHT = 640;
+import static com.rat6.game.MyGdxGame.assets;
 
-    private SpriteBatch batch;
-    private OrthographicCamera camera;
-    private Viewport viewport;
-
-    public static Assets assets;
+public class StandardWorld implements World {
     private Tank playerTank;
     private TankController tankController;
     public static BulletsHandler bulletsHandler;
@@ -34,17 +22,7 @@ public class Level {
 
     private Enemies enemies;
 
-
-    public void create() {
-        batch = new SpriteBatch();
-
-        // Создание камеры и Viewport
-        camera = new OrthographicCamera();
-        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
-        viewport.apply();
-        camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
-
-        assets = new Assets();
+    public StandardWorld() {
         bulletsHandler = new BulletsHandler(assets);
 
         playerTank = new TankBuilder()
@@ -60,36 +38,22 @@ public class Level {
         boulder = new BoulderWall(assets, 0, 0);
     }
 
-    public void render() {
-        camera.update();
-        batch.setProjectionMatrix(camera.combined);
-
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+    @Override
+    public void update(){
         tankController.update(); // слушатель кнопок, вызывает методы передвижения танка
 
         enemies.update();
         bulletsHandler.update();
         boulder.update();
+    }
 
-        batch.begin();
+    @Override
+    public void render(SpriteBatch batch) {
         grassMap.render(batch);
         playerTank.render(batch);
         enemies.render(batch);
         boulder.render(batch);
         bulletsHandler.render(batch);
-        batch.end();
     }
 
-    public void resize(int width, int height) {
-        viewport.update(width, height);
-        camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
-    }
-
-    
-    public void dispose() {
-        batch.dispose();
-        assets.dispose();
-    }
 }
