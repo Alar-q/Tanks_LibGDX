@@ -42,6 +42,7 @@ public abstract class World {
 
         explosions = new ArrayList<>();
         explosionsHandler = new ExplosionsHandler(explosions);
+
     }
     public void createExplosion(float x, float y, boolean massive) {
 //        System.out.println("createExplosion: x=" + x + ", y=" + y);
@@ -50,6 +51,7 @@ public abstract class World {
         explosions.add(explosion);
     }
     public Tank createTank(TankColor color, float x, float y){
+        System.out.println(color.toString());
         Tank newTank = new Tank(this, assets, color, x, y, 200);
         tanks.add(newTank);
         return newTank;

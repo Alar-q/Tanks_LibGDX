@@ -6,11 +6,11 @@ import com.rat6.game.Assets;
 import com.rat6.game.game_objects.boulder.Boulder;
 import com.rat6.game.game_objects.bullet.Bullet;
 import com.rat6.game.game_objects.bullet.BulletsHandler;
-import com.rat6.game.game_objects.enemies.Enemy;
 import com.rat6.game.game_objects.explosion.Explosion;
 import com.rat6.game.game_objects.explosion.ExplosionsHandler;
 import com.rat6.game.game_objects.map.GameMap;
 import com.rat6.game.game_objects.map.GrassMap;
+import com.rat6.game.game_objects.tank.EnemyController;
 import com.rat6.game.game_objects.tank.Tank;
 import com.rat6.game.game_objects.tank.TankColor;
 import com.rat6.game.game_objects.tank.KeyboardController;
@@ -21,6 +21,7 @@ import java.util.List;
 
 public class StandardWorld extends World {
     private KeyboardController keyboardController;
+    private EnemyController enemyController;
 
     private GameMap grassMap;
 
@@ -32,16 +33,18 @@ public class StandardWorld extends World {
         createBullet(playerTank);
         keyboardController = new KeyboardController(playerTank);
 
-//        enemy = new Enemy(assets);
+        Tank enemyTank = createTank(TankColor.RED, 500, 500);
+        enemyController = new EnemyController(enemyTank);
 
         grassMap = new GrassMap(assets);
-        createBoulder(500, 500);
+        createBoulder(50, 50);
     }
 
     @Override
     public void update(float deltaTime){
         // слушатель кнопок, изменяет состояние танка
         keyboardController.update();
+        enemyController.update(deltaTime);
 
         explosionsHandler.update(deltaTime);
 
