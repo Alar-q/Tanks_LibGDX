@@ -57,6 +57,7 @@ public class Tank extends GameObject {
         List<GameObject> objects = world.getInteractingObjects();
 
 
+        // Update position
         // Обновляем позицию, только если танк не уперся во что-нибудь
         boolean isBumped = false;
         if(state == ObjectState.MOVING){

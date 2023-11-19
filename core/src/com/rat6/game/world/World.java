@@ -106,6 +106,11 @@ public abstract class World {
         return objects;
     }
 
+    /**
+     * Если Tank стреляет, то Tank.id передается Bullet.id
+     * Так мы понимаем, что пуля именно этого танка.
+     * Получается, есть огонь по своим.
+     * */
     public int bulletHit(GameObject gameObject){
         if(gameObject.shape != GameObject.Shape.CIRCLE){
             // Пока сделаю только для кругов

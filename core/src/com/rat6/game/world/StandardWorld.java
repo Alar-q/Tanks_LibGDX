@@ -23,7 +23,6 @@ public class StandardWorld extends World {
     private KeyboardController keyboardController;
 
     private GameMap grassMap;
-    private Enemy enemy;
 
     public StandardWorld(Assets assets) {
         super(assets);
