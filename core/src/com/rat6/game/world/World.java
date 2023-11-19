@@ -15,6 +15,7 @@ import com.rat6.game.game_objects.bullet.Bullet;
 import com.rat6.game.game_objects.bullet.BulletsHandler;
 import com.rat6.game.game_objects.explosion.Explosion;
 import com.rat6.game.game_objects.explosion.ExplosionsHandler;
+import com.rat6.game.game_objects.headquarters.Headquarters;
 import com.rat6.game.game_objects.tank.Tank;
 import com.rat6.game.game_objects.tank.TankColor;
 
@@ -28,6 +29,7 @@ public abstract class World {
     public List<Bullet> bullets;
     public BulletsHandler bulletsHandler;
     public List<Boulder> boulders;
+    public Headquarters headquarters;
     public List<Explosion> explosions;
     public ExplosionsHandler explosionsHandler;
 
@@ -43,6 +45,7 @@ public abstract class World {
         explosions = new ArrayList<>();
         explosionsHandler = new ExplosionsHandler(explosions);
 
+        headquarters = new Headquarters(this, assets, WORLD_WIDTH / 2f, 18f);
     }
     public void createExplosion(float x, float y, boolean massive) {
 //        System.out.println("createExplosion: x=" + x + ", y=" + y);
@@ -106,6 +109,7 @@ public abstract class World {
         List<GameObject> objects = new ArrayList<>();
         objects.addAll(tanks);
         objects.addAll(boulders);
+        objects.add(headquarters);
         return objects;
     }
 

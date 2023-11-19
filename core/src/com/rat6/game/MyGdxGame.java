@@ -18,7 +18,6 @@ import com.rat6.game.world.StandardWorld;
 
 public class MyGdxGame extends ApplicationAdapter {
 
-
 	public static final float 	WORLD_WIDTH = 960,
 								WORLD_HEIGHT = 640;
 
@@ -43,12 +42,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		viewport.apply();
 		camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
 
-		inputProcessor = new TouchInputProcessor(camera);
+		inputProcessor = new TouchInputProcessor(viewport);
 		Gdx.input.setInputProcessor(inputProcessor);
 
 		assets = new Assets();
 
-		stage = Stage.GAME;
+		stage = Stage.MENU;
 		gameStage = new GameStage(assets, inputProcessor);
 		menuStage = new MenuStage(assets, inputProcessor);
 
@@ -88,7 +87,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void resize(int width, int height) {
 		viewport.update(width, height);
-		camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
+		camera.position.set(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f, 0);
 	}
 
 	@Override

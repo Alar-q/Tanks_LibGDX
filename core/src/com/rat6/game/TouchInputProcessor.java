@@ -4,18 +4,19 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class TouchInputProcessor implements InputProcessor {
-    private OrthographicCamera camera;
+    private Viewport viewport;
     private float touchX = 0;
     private float touchY = 0;
     private boolean touched = false;
-    public TouchInputProcessor(OrthographicCamera camera){
-        this.camera = camera;
+    public TouchInputProcessor(Viewport viewport){
+        this.viewport = viewport;
     }
     public Vector2 screenToWorldCoordinates(float screenX, float screenY) {
         Vector3 screenCoords = new Vector3(screenX, screenY, 0);
-        camera.unproject(screenCoords); // Преобразует экранные координаты в координаты мира
+        viewport.unproject(screenCoords); // Преобразует экранные координаты в координаты мира
         return new Vector2(screenCoords.x, screenCoords.y);
     }
     @Override

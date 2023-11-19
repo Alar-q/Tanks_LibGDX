@@ -20,7 +20,8 @@ public class MenuStage {
     }
 
     public void render(SpriteBatch batch) {
-        assets.font.drawText(batch, "Some text", 100, 100);
+        batch.draw(assets.menu, 0, 0);
+        assets.font.drawText(batch, "Some text", 0, 0);
         if (inputProcessor.isTouched()) {
             assets.font.drawText(batch, "Touch coordinates: " + inputProcessor.getTouchX() + ", " + inputProcessor.getTouchY(), 100, 150);
         }

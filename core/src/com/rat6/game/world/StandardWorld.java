@@ -58,6 +58,7 @@ public class StandardWorld extends World {
             }
         }
 
+        headquarters.update(deltaTime);
 
         Iterator<Boulder> iterator = boulders.iterator();
         while(iterator.hasNext()){
@@ -87,6 +88,7 @@ public class StandardWorld extends World {
         for(Boulder boulder: boulders){
             boulder.render(batch);
         }
+        headquarters.render(batch);
         for (Explosion explosion : explosions) {
             explosion.render(batch);
         }

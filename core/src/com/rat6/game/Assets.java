@@ -8,6 +8,7 @@ import com.rat6.game.font.Font;
 public class Assets {
 
     public Texture atlas;
+    public Texture menu;
 
     public TextureRegion[]
             // blue tank
@@ -45,6 +46,7 @@ public class Assets {
     public  TextureRegion[] boulders;
     public  TextureRegion[] explosionFrames;
     public  TextureRegion[] depots;
+    public  TextureRegion[] headquarters;
 
     public  TextureRegion scrollBarRed;
     public  TextureRegion scrollBarYellow;
@@ -63,6 +65,7 @@ public class Assets {
 
     public void load(){
         atlas = new Texture("atlas++.png");
+        menu = new Texture("menu.png");
 
         loadBlueTank();
         loadRedTank();
@@ -93,9 +96,9 @@ public class Assets {
     public void loadEnvironment(){
         turf = new TextureRegion(atlas, 0, 832, 64, 64);
 
-        shabby_turfs = new TextureRegion[6];
-        for(int i=0; i<6; i++){
-            shabby_turfs[i]     = new TextureRegion(atlas, 0, 896 + 64 * i,  64, 64);
+        shabby_turfs = new TextureRegion[7];
+        for(int i=0; i<7; i++){
+            shabby_turfs[i]     = new TextureRegion(atlas, 0, 832 + 64 * i,  64, 64);
         }
 
         boulders = new TextureRegion[]{
@@ -113,6 +116,12 @@ public class Assets {
                 new TextureRegion(atlas, 64, 832 + 64 * 4,  64, 64),
                 new TextureRegion(atlas, 64, 832 + 64 * 5,  64, 64),
         };
+
+        headquarters = new TextureRegion[]{
+                new TextureRegion(atlas, 128, 832, 64, 96),
+                new TextureRegion(atlas, 128, 832 + 96, 64, 96),
+        };
+
     }
 
     public void playSound(Sound sound){
