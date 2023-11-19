@@ -33,7 +33,7 @@ public class StandardWorld extends World {
         createBullet(playerTank);
         keyboardController = new KeyboardController(playerTank);
 
-        Tank enemyTank = createTank(TankColor.RED, 500, 500);
+        Tank enemyTank = createTank(TankColor.RED, 200, 200);
         enemyController = new EnemyController(enemyTank);
 
         grassMap = new GrassMap(assets);

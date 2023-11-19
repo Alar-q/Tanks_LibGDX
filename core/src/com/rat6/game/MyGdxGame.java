@@ -1,5 +1,6 @@
 package com.rat6.game;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -38,6 +39,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		assets = new Assets();
 
 		standardWorld = new StandardWorld(assets);
+		Application.ApplicationType appType = Gdx.app.getType();
+		System.out.println(appType);
 	}
 
 	@Override

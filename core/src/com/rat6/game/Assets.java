@@ -120,8 +120,8 @@ public class Assets {
     }
 
     private void loadDestroyedTank(){
-        destroyedTankR = new TextureRegion(atlas, 0,  1280, 64, 64);
-        destroyedTankL = new TextureRegion(atlas, 64, 1280, 64, 64);
+        destroyedTankR = new TextureRegion(atlas, 0,  1280, 96, 64);
+        destroyedTankL = new TextureRegion(atlas, 96, 1280, 96, 64);
         destroyedTankU = new TextureRegion(atlas, 64, 1344, 64, 96);
         destroyedTankD = new TextureRegion(atlas, 0,  1344, 64, 96);
     }
