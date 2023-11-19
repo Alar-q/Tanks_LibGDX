@@ -101,6 +101,7 @@ public abstract class World {
         boulders.add(newBoulder);
         return newBoulder;
     }
+
     public List<GameObject> getInteractingObjects(){
         List<GameObject> objects = new ArrayList<>();
         objects.addAll(tanks);
@@ -146,6 +147,7 @@ public abstract class World {
         Circle circle = gameObject.circle;
         return circle.x < circle.radius || circle.y < circle.radius || circle.x > WORLD_WIDTH - circle.radius || circle.y > WORLD_HEIGHT - circle.radius;
     }
+
     public boolean isOutOfBounds(Vector2 center, float radius) {
         return center.x < radius || center.y < radius || center.x > WORLD_WIDTH - radius || center.y > WORLD_HEIGHT - radius;
     }

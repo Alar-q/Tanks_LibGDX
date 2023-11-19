@@ -55,7 +55,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		batch.begin();
 		standardWorld.render(batch);
-
+		assets.font.drawText(batch, "FUCK YOU", 100, 100);
 		// Начните рисовать круг
 //		Circl/e circle = standardWorld.tanks.get(0).circle; // Замените yourCircleObject на ваш объект Circle
 //		batch.draw(assets.cannonball, circle.x-circle.radius, circle.y-circle.radius, circle.radius*2, circle.radius*2); // Отрисуйте круг

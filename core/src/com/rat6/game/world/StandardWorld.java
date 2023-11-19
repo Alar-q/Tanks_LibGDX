@@ -3,6 +3,7 @@ package com.rat6.game.world;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.rat6.game.Assets;
+import com.rat6.game.game_objects.ObjectState;
 import com.rat6.game.game_objects.boulder.Boulder;
 import com.rat6.game.game_objects.bullet.Bullet;
 import com.rat6.game.game_objects.bullet.BulletsHandler;
@@ -48,8 +49,13 @@ public class StandardWorld extends World {
 
         explosionsHandler.update(deltaTime);
 
-        for(Tank tank: tanks){
+        Iterator<Tank> tanksIterator = tanks.iterator();
+        while(tanksIterator.hasNext()){
+            Tank tank = tanksIterator.next();
             tank.update(deltaTime);
+            if(tank.isRuined()){
+                tanksIterator.remove();
+            }
         }
 
         bulletsHandler.update(deltaTime);

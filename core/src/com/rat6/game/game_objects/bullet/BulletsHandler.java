@@ -51,7 +51,6 @@ public class BulletsHandler {
                 }
             }
         }
-
         bullets.removeAll(toRemove);
     }
 

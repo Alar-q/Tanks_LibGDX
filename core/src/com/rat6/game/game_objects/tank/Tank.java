@@ -21,6 +21,7 @@ public class Tank extends GameObject {
     private Assets assets;
     private World world;
     private TankAnimator tankAnimator;
+    private int health = 1;
 
     /**
      * @x x-axis of center
@@ -56,7 +57,6 @@ public class Tank extends GameObject {
     public void update(float deltaTime){
         List<GameObject> objects = world.getInteractingObjects();
 
-
         // Update position
         // Обновляем позицию, только если танк не уперся во что-нибудь
         boolean isBumped = false;
@@ -83,9 +83,9 @@ public class Tank extends GameObject {
 
         // Bullet hits
         int hits = world.bulletHit(this);
-        if(hits > 0){
+        health -= hits;
+        if(health <= 0){
             state = ObjectState.DEAD;
-            return;
         }
 
         tankAnimator.update(deltaTime);
@@ -112,5 +112,7 @@ public class Tank extends GameObject {
         }
     }
 
-
+    public boolean isRuined(){
+        return health < 0;
+    }
 }
