@@ -84,8 +84,8 @@ public class Assets {
         scrollBarYellow = new TextureRegion(atlas, 0,  1568, 192 , 64);
 
         menuButtons = new TextureRegion[]{
-                new TextureRegion(atlas, 192,  1376,192 , 96),
                 new TextureRegion(atlas, 192,  1376 + 96, 192 , 96),
+                new TextureRegion(atlas, 192,  1376,192 , 96),
         };
 
 //        shot        = Gdx.audio.newSound(Gdx.files.internal("shot.ogg"));

@@ -34,7 +34,7 @@ public abstract class GameObject {
     }
 
     public GameObject rectangle(float x, float y, float width, float height){
-        System.out.println(id);
+//        System.out.println(id);
 
         shape = Shape.RECTANGLE;
         rectangle = new Rectangle();

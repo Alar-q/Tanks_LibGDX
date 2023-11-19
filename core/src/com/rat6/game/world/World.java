@@ -18,12 +18,14 @@ import com.rat6.game.game_objects.explosion.ExplosionsHandler;
 import com.rat6.game.game_objects.headquarters.Headquarters;
 import com.rat6.game.game_objects.tank.Tank;
 import com.rat6.game.game_objects.tank.TankColor;
+import com.rat6.game.game_objects.tank.controllers.TankController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public abstract class World {
+    protected List<TankController> tankControllers;
     protected Assets assets;
     public List<Tank> tanks;
     public List<Bullet> bullets;
@@ -35,6 +37,8 @@ public abstract class World {
 
     public World(Assets assets){
         this.assets = assets;
+        tankControllers = new ArrayList<>();
+
         tanks = new ArrayList<>();
 
         bullets = new ArrayList<>();
@@ -47,6 +51,11 @@ public abstract class World {
 
         headquarters = new Headquarters(this, assets, WORLD_WIDTH / 2f, 18f);
     }
+
+    public void addTankController(TankController tankController){
+        tankControllers.add(tankController);
+    }
+
     public void createExplosion(float x, float y, boolean massive) {
 //        System.out.println("createExplosion: x=" + x + ", y=" + y);
         TextureRegion[] explosionFrames = massive ? assets.explosionFrames : Arrays.copyOf(assets.explosionFrames, assets.explosionFrames.length - 2);
@@ -54,7 +63,7 @@ public abstract class World {
         explosions.add(explosion);
     }
     public Tank createTank(TankColor color, float x, float y){
-        System.out.println(color.toString());
+//        System.out.println(color.toString());
         Tank newTank = new Tank(this, assets, color, x, y, 200);
         tanks.add(newTank);
         return newTank;

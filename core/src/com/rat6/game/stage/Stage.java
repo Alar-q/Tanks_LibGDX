@@ -2,5 +2,7 @@ package com.rat6.game.stage;
 
 public enum Stage {
     MENU,
-    GAME
+    SINGLE_GAME,
+    MULTI_GAME,
+    ONLINE_GAME,
 }

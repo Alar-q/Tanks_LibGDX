@@ -26,10 +26,10 @@ public class Boulder extends GameObject {
                 boulders[destructionPhase].getRegionWidth() / 2f
         );
 
-        System.out.println("x:"+x+", y:"+
+        /*System.out.println("x:"+x+", y:"+
                 y + ", width: " +
                 boulders[destructionPhase].getRegionWidth()+ ", height:"+
-                boulders[destructionPhase].getRegionHeight());
+                boulders[destructionPhase].getRegionHeight());*/
     }
 
     @Override

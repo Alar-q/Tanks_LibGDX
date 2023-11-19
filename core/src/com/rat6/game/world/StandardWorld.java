@@ -1,41 +1,31 @@
 package com.rat6.game.world;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.rat6.game.Assets;
-import com.rat6.game.game_objects.ObjectState;
 import com.rat6.game.game_objects.boulder.Boulder;
 import com.rat6.game.game_objects.bullet.Bullet;
-import com.rat6.game.game_objects.bullet.BulletsHandler;
 import com.rat6.game.game_objects.explosion.Explosion;
-import com.rat6.game.game_objects.explosion.ExplosionsHandler;
 import com.rat6.game.game_objects.map.GameMap;
 import com.rat6.game.game_objects.map.GrassMap;
-import com.rat6.game.game_objects.tank.EnemyController;
+import com.rat6.game.game_objects.tank.controllers.EnemyController;
 import com.rat6.game.game_objects.tank.Tank;
 import com.rat6.game.game_objects.tank.TankColor;
-import com.rat6.game.game_objects.tank.KeyboardController;
+import com.rat6.game.game_objects.tank.controllers.KeyboardController;
+import com.rat6.game.game_objects.tank.controllers.TankController;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class StandardWorld extends World {
-    private KeyboardController keyboardController;
-    private EnemyController enemyController;
-
     private GameMap grassMap;
 
     public StandardWorld(Assets assets) {
         super(assets);
 
         tanks = new ArrayList<>();
-        Tank playerTank = createTank(TankColor.BLUE, 100, 100);
-        createBullet(playerTank);
-        keyboardController = new KeyboardController(playerTank);
 
         Tank enemyTank = createTank(TankColor.RED, 200, 200);
-        enemyController = new EnemyController(enemyTank);
+        addTankController(new EnemyController(enemyTank));
 
         grassMap = new GrassMap(assets);
         createBoulder(50, 50);
@@ -44,8 +34,9 @@ public class StandardWorld extends World {
     @Override
     public void update(float deltaTime){
         // слушатель кнопок, изменяет состояние танка
-        keyboardController.update(deltaTime);
-        enemyController.update(deltaTime);
+        for(TankController tankController: tankControllers){
+            tankController.update(deltaTime);
+        }
 
         bulletsHandler.update(deltaTime);
 
@@ -91,6 +82,10 @@ public class StandardWorld extends World {
         headquarters.render(batch);
         for (Explosion explosion : explosions) {
             explosion.render(batch);
+        }
+
+        for(TankController tankController: tankControllers){
+            tankController.render(batch);
         }
     }
 

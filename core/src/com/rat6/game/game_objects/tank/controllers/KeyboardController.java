@@ -1,38 +1,39 @@
-package com.rat6.game.game_objects.tank;
+package com.rat6.game.game_objects.tank.controllers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.rat6.game.game_objects.ObjectDirection;
+import com.rat6.game.game_objects.tank.Tank;
 
-public class KeyboardController {
-    private Tank playerTank;
+public class KeyboardController extends TankController {
     public KeyboardController(Tank playerTank){
-        this.playerTank = playerTank;
+        super(playerTank);
     }
+    @Override
     public void update(float deltaTime){
         if(deltaTime == 0){
             return;
         }
         // Обработка стрельбы
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            playerTank.shoot();
+            tank.shoot();
         }
         // Обновляем положение танка в зависимости от нажатых клавиш
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            playerTank.move(ObjectDirection.LEFT);
+            tank.move(ObjectDirection.LEFT);
         }
         else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            playerTank.move(ObjectDirection.RIGHT);
+            tank.move(ObjectDirection.RIGHT);
         }
         else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            playerTank.move(ObjectDirection.UP);
+            tank.move(ObjectDirection.UP);
 
         }
         else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            playerTank.move(ObjectDirection.DOWN);
+            tank.move(ObjectDirection.DOWN);
         }
         else {
-            playerTank.stop();
+            tank.stop();
         }
     }
 }

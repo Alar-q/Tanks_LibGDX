@@ -6,14 +6,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rat6.game.stage.Stage;
 import com.rat6.game.stage.game.GameStage;
 import com.rat6.game.stage.menu.MenuStage;
-import com.rat6.game.world.StandardWorld;
 
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -48,8 +45,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		assets = new Assets();
 
 		stage = Stage.MENU;
-		gameStage = new GameStage(assets, inputProcessor);
-		menuStage = new MenuStage(assets, inputProcessor);
+		gameStage = new GameStage(this, assets, inputProcessor);
+		menuStage = new MenuStage(this, assets, inputProcessor);
 
 		Application.ApplicationType appType = Gdx.app.getType();
 		System.out.println(appType);
@@ -66,7 +63,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		if(stage == Stage.MENU){
 			menuStage.update(Gdx.graphics.getDeltaTime());
 		}
-		else if(stage == Stage.GAME){
+		else if(stage == Stage.SINGLE_GAME){
 			gameStage.update(Gdx.graphics.getDeltaTime());
 		}
 
@@ -75,14 +72,18 @@ public class MyGdxGame extends ApplicationAdapter {
 		if(stage == Stage.MENU){
 			menuStage.render(batch);
 		}
-		else if(stage == Stage.GAME){
+		else if(stage == Stage.SINGLE_GAME){
 			gameStage.render(batch);
 		}
 
 		batch.end();
 	}
 
-
+	public void setStage(Stage stage){
+		this.stage = stage;
+		gameStage = new GameStage(this, assets, inputProcessor);
+		menuStage = new MenuStage(this, assets, inputProcessor);
+	}
 
 	@Override
 	public void resize(int width, int height) {
