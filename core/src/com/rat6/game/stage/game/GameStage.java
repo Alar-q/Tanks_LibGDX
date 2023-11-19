@@ -3,6 +3,8 @@ package com.rat6.game.stage.game;
 import static com.rat6.game.MyGdxGame.WORLD_HEIGHT;
 import static com.rat6.game.MyGdxGame.WORLD_WIDTH;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.rat6.game.Assets;
@@ -31,12 +33,15 @@ public class GameStage {
 
         Tank playerTank = standardWorld.createTank(TankColor.BLUE, 100, 100);
         standardWorld.addTankController(new KeyboardController(playerTank));
-        standardWorld.addTankController(new DisplayController(playerTank)
-                .setInputProcessor(inputProcessor)
-                .setAssets(assets)
-                .setWorldSize(WORLD_WIDTH, WORLD_HEIGHT)
-                .build()
-        );
+        // Display Controller
+        if(!Gdx.app.getType().equals(Application.ApplicationType.Desktop)){
+            standardWorld.addTankController(new DisplayController(playerTank)
+                    .setInputProcessor(inputProcessor)
+                    .setAssets(assets)
+                    .setWorldSize(WORLD_WIDTH, WORLD_HEIGHT)
+                    .build()
+            );
+        }
     }
     public void update(float deltaTime){
         standardWorld.update(deltaTime);
