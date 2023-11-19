@@ -51,7 +51,7 @@ public class Assets {
     public  TextureRegion scrollBarRed;
     public  TextureRegion scrollBarYellow;
     public  TextureRegion slider;
-    public  TextureRegion menuButton;
+    public  TextureRegion[] menuButtons;
 
     public Sound    shot,
                     explosion,
@@ -83,7 +83,10 @@ public class Assets {
         scrollBarRed    = new TextureRegion(atlas, 0,  1504, 192, 64);
         scrollBarYellow = new TextureRegion(atlas, 0,  1568, 192 , 64);
 
-        menuButton = new TextureRegion(atlas, 192,  1504, 192 , 128);
+        menuButtons = new TextureRegion[]{
+                new TextureRegion(atlas, 192,  1376,192 , 96),
+                new TextureRegion(atlas, 192,  1376 + 96, 192 , 96),
+        };
 
 //        shot        = Gdx.audio.newSound(Gdx.files.internal("shot.ogg"));
 //        explosion   = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
