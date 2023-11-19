@@ -3,18 +3,22 @@ package com.rat6.game;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.rat6.game.stage.Stage;
+import com.rat6.game.stage.game.GameStage;
+import com.rat6.game.stage.menu.MenuStage;
 import com.rat6.game.world.StandardWorld;
 
+
 public class MyGdxGame extends ApplicationAdapter {
+
+
 	public static final float 	WORLD_WIDTH = 960,
 								WORLD_HEIGHT = 640;
 
@@ -24,7 +28,10 @@ public class MyGdxGame extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private Viewport viewport;
 
-	private StandardWorld standardWorld;
+	private Stage stage;
+	private GameStage gameStage;
+	private MenuStage menuStage;
+	public TouchInputProcessor inputProcessor;
 
 	@Override
 	public void create() {
@@ -36,9 +43,15 @@ public class MyGdxGame extends ApplicationAdapter {
 		viewport.apply();
 		camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
 
+		inputProcessor = new TouchInputProcessor(camera);
+		Gdx.input.setInputProcessor(inputProcessor);
+
 		assets = new Assets();
 
-		standardWorld = new StandardWorld(assets);
+		stage = Stage.GAME;
+		gameStage = new GameStage(assets, inputProcessor);
+		menuStage = new MenuStage(assets, inputProcessor);
+
 		Application.ApplicationType appType = Gdx.app.getType();
 		System.out.println(appType);
 	}
@@ -51,20 +64,26 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		standardWorld.update(Gdx.graphics.getDeltaTime());
+		if(stage == Stage.MENU){
+			menuStage.update(Gdx.graphics.getDeltaTime());
+		}
+		else if(stage == Stage.GAME){
+			gameStage.update(Gdx.graphics.getDeltaTime());
+		}
 
 		batch.begin();
-		standardWorld.render(batch);
-		assets.font.drawText(batch, "FUCK YOU", 100, 100);
-		// Начните рисовать круг
-//		Circl/e circle = standardWorld.tanks.get(0).circle; // Замените yourCircleObject на ваш объект Circle
-//		batch.draw(assets.cannonball, circle.x-circle.radius, circle.y-circle.radius, circle.radius*2, circle.radius*2); // Отрисуйте круг
-//
-//		Circle circleB = standardWorld.boulders.get(0).circle; // Замените yourCircleObject на ваш объект Circle
-//		batch.draw(assets.cannonball, circleB.x - circleB.radius, circleB.y - circleB.radius, circleB.radius*2, circleB.radius*2); // Отрисуйте круг
+
+		if(stage == Stage.MENU){
+			menuStage.render(batch);
+		}
+		else if(stage == Stage.GAME){
+			gameStage.render(batch);
+		}
 
 		batch.end();
 	}
+
+
 
 	@Override
 	public void resize(int width, int height) {

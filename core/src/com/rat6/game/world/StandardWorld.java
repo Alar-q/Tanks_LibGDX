@@ -44,10 +44,10 @@ public class StandardWorld extends World {
     @Override
     public void update(float deltaTime){
         // слушатель кнопок, изменяет состояние танка
-        keyboardController.update();
+        keyboardController.update(deltaTime);
         enemyController.update(deltaTime);
 
-        explosionsHandler.update(deltaTime);
+        bulletsHandler.update(deltaTime);
 
         Iterator<Tank> tanksIterator = tanks.iterator();
         while(tanksIterator.hasNext()){
@@ -58,9 +58,6 @@ public class StandardWorld extends World {
             }
         }
 
-        bulletsHandler.update(deltaTime);
-
-//        enemy.update(deltaTime);
 
         Iterator<Boulder> iterator = boulders.iterator();
         while(iterator.hasNext()){
@@ -70,6 +67,8 @@ public class StandardWorld extends World {
                 iterator.remove();
             }
         }
+
+        explosionsHandler.update(deltaTime);
     }
 
     @Override

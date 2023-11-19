@@ -9,7 +9,10 @@ public class KeyboardController {
     public KeyboardController(Tank playerTank){
         this.playerTank = playerTank;
     }
-    public void update(){
+    public void update(float deltaTime){
+        if(deltaTime == 0){
+            return;
+        }
         // Обработка стрельбы
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             playerTank.shoot();
