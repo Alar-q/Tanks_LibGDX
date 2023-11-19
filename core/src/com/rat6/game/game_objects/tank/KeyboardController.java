@@ -2,34 +2,34 @@ package com.rat6.game.game_objects.tank;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.rat6.game.game_objects.bullet.BulletsHandler;
+import com.rat6.game.game_objects.ObjectDirection;
 
-public class TankController {
+public class KeyboardController {
     private Tank playerTank;
-    public TankController(Tank playerTank){
+    public KeyboardController(Tank playerTank){
         this.playerTank = playerTank;
     }
-    public void update(BulletsHandler bulletsHandler){
+    public void update(){
         // Обработка стрельбы
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            playerTank.shoot(bulletsHandler);
+            playerTank.shoot();
         }
         // Обновляем положение танка в зависимости от нажатых клавиш
-        else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            playerTank.moveLeft();
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            playerTank.move(ObjectDirection.LEFT);
         }
         else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            playerTank.moveRight();
+            playerTank.move(ObjectDirection.RIGHT);
         }
         else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            playerTank.moveUp();
+            playerTank.move(ObjectDirection.UP);
+
         }
         else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            playerTank.moveDown();
+            playerTank.move(ObjectDirection.DOWN);
         }
-
         else {
-            playerTank.stopMoving();
+            playerTank.stop();
         }
     }
 }

@@ -5,20 +5,20 @@ import com.rat6.game.Assets;
 import com.rat6.game.MyGdxGame;
 import com.rat6.game.game_objects.bullet.BulletsHandler;
 import com.rat6.game.game_objects.tank.Tank;
-import com.rat6.game.game_objects.tank.TankBuilder;
+import com.rat6.game.game_objects.tank.TankColor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Enemies {
-    private List<Tank> enemyTanks;
+public class Enemy {
+   /* private List<Tank> enemyTanks;
     private Random random;
     private float movementInterval;
 
     private Assets assets;
 
-    public Enemies(Assets assets) {
+    public Enemy(Assets assets) {
         this.assets = assets;
         this.enemyTanks = new ArrayList<>();
         this.random = new Random();
@@ -42,11 +42,7 @@ public class Enemies {
 
             // Создание вражеского танка в случайной позиции
             // Убедитесь, что у вас есть все необходимые текстуры и параметры для создания врага
-            Tank enemy = new TankBuilder()
-                    .redTank(assets)
-                    .setPosition(x, y) // Установите начальную позицию танка
-                    .setSpeed(200) // Установите скорость танка
-                    .build();
+            Tank enemy = new Tank(assets, TankColor.RED, x, y, 200);
             enemyTanks.add(enemy);
         }
     }
@@ -82,5 +78,5 @@ public class Enemies {
         for (Tank enemy : enemyTanks) {
             enemy.render(batch);
         }
-    }
+    }*/
 }

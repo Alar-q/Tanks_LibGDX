@@ -1,59 +1,88 @@
 package com.rat6.game.world;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.rat6.game.game_objects.boulder.BoulderWall;
+import com.badlogic.gdx.math.Vector2;
+import com.rat6.game.Assets;
+import com.rat6.game.game_objects.boulder.Boulder;
+import com.rat6.game.game_objects.bullet.Bullet;
 import com.rat6.game.game_objects.bullet.BulletsHandler;
-import com.rat6.game.game_objects.enemies.Enemies;
+import com.rat6.game.game_objects.enemies.Enemy;
+import com.rat6.game.game_objects.explosion.Explosion;
+import com.rat6.game.game_objects.explosion.ExplosionsHandler;
 import com.rat6.game.game_objects.map.GameMap;
 import com.rat6.game.game_objects.map.GrassMap;
 import com.rat6.game.game_objects.tank.Tank;
-import com.rat6.game.game_objects.tank.TankBuilder;
-import com.rat6.game.game_objects.tank.TankController;
+import com.rat6.game.game_objects.tank.TankColor;
+import com.rat6.game.game_objects.tank.KeyboardController;
 
-import static com.rat6.game.MyGdxGame.assets;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-public class StandardWorld implements World {
-    private Tank playerTank;
-    private TankController tankController;
-    public static BulletsHandler bulletsHandler;
+public class StandardWorld extends World {
+    private KeyboardController keyboardController;
 
     private GameMap grassMap;
-    private BoulderWall boulder;
+    private Enemy enemy;
 
-    private Enemies enemies;
+    public StandardWorld(Assets assets) {
+        super(assets);
 
-    public StandardWorld() {
-        bulletsHandler = new BulletsHandler(assets);
+        tanks = new ArrayList<>();
+        Tank playerTank = createTank(TankColor.BLUE, 100, 100);
+        createBullet(playerTank);
+        keyboardController = new KeyboardController(playerTank);
 
-        playerTank = new TankBuilder()
-                .blueTank(assets)
-                .setPosition(100, 100) // Установите начальную позицию танка
-                .setSpeed(200) // Установите скорость танка
-                .build();
-        tankController = new TankController(playerTank);
-
-        enemies = new Enemies(assets);
+//        enemy = new Enemy(assets);
 
         grassMap = new GrassMap(assets);
-        boulder = new BoulderWall(assets, 0, 0);
+        createBoulder(500, 500);
     }
 
     @Override
-    public void update(){
-        tankController.update(); // слушатель кнопок, вызывает методы передвижения танка
+    public void update(float deltaTime){
+        // слушатель кнопок, изменяет состояние танка
+        keyboardController.update();
 
-        enemies.update();
-        bulletsHandler.update();
-        boulder.update();
+        explosionsHandler.update(deltaTime);
+
+        for(Tank tank: tanks){
+            tank.update(deltaTime);
+        }
+
+        bulletsHandler.update(deltaTime);
+
+//        enemy.update(deltaTime);
+
+        Iterator<Boulder> iterator = boulders.iterator();
+        while(iterator.hasNext()){
+            Boulder boulder = iterator.next();
+            boulder.update(deltaTime);
+            if(boulder.isRuined()){
+                iterator.remove();
+            }
+        }
     }
 
     @Override
     public void render(SpriteBatch batch) {
         grassMap.render(batch);
-        playerTank.render(batch);
-        enemies.render(batch);
-        boulder.render(batch);
-        bulletsHandler.render(batch);
+        for(Tank tank: tanks){
+            tank.render(batch);
+        }
+        for(Bullet bullet: bullets){
+            bullet.render(batch);
+        }
+        for (Bullet bullet : bullets) {
+            bullet.render(batch);
+        }
+//        enemy.render(batch);
+        for(Boulder boulder: boulders){
+            boulder.render(batch);
+        }
+        for (Explosion explosion : explosions) {
+            explosion.render(batch);
+        }
     }
 
 }

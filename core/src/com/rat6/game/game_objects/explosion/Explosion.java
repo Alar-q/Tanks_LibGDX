@@ -1,4 +1,4 @@
-package com.rat6.game.explosion;
+package com.rat6.game.game_objects.explosion;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -6,15 +6,18 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.rat6.game.Assets;
 
+import java.util.Arrays;
+
 public class Explosion {
     private TextureRegion[] explosionFrames; // Кадры анимации взрыва
-    private Vector2 position;
+    private float x, y;
     private float frameDuration; // Длительность отображения одного кадра
     private float elapsedTime; // Время, прошедшее с начала взрыва
 
-    public Explosion(Assets assets, Vector2 position, float frameDuration) {
-        this.explosionFrames = assets.explosionFrames;
-        this.position = position;
+    public Explosion(TextureRegion[] explosionFrames, float x, float y, float frameDuration) {
+        this.explosionFrames = explosionFrames;
+        this.x = x;
+        this.y = y;
         this.frameDuration = frameDuration;
         this.elapsedTime = 0;
     }
@@ -26,7 +29,10 @@ public class Explosion {
     public void render(SpriteBatch batch) {
         int frameIndex = (int)(elapsedTime / frameDuration);
         if (frameIndex < explosionFrames.length) {
-            batch.draw(explosionFrames[frameIndex], position.x, position.y);
+            batch.draw(explosionFrames[frameIndex],
+                    x - explosionFrames[frameIndex].getRegionWidth()/2f,
+                    y - explosionFrames[frameIndex].getRegionHeight()/2f
+            );
         }
     }
 

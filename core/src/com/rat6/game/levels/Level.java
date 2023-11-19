@@ -1,23 +1,7 @@
 package com.rat6.game.levels;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.rat6.game.Assets;
-import com.rat6.game.game_objects.boulder.BoulderWall;
-import com.rat6.game.game_objects.bullet.BulletsHandler;
-import com.rat6.game.game_objects.enemies.Enemies;
-import com.rat6.game.game_objects.map.GameMap;
-import com.rat6.game.game_objects.map.GrassMap;
-import com.rat6.game.game_objects.tank.Tank;
-import com.rat6.game.game_objects.tank.TankBuilder;
-import com.rat6.game.game_objects.tank.TankController;
-
 public class Level {
-    public static final float WORLD_WIDTH = 960;
+    /*public static final float WORLD_WIDTH = 960;
     public static final float WORLD_HEIGHT = 640;
 
     private SpriteBatch batch;
@@ -32,7 +16,7 @@ public class Level {
     private GameMap grassMap;
     private BoulderWall boulder;
 
-    private Enemies enemies;
+    private Enemy enemy;
 
 
     public void create() {
@@ -54,7 +38,7 @@ public class Level {
                 .build();
         tankController = new TankController(playerTank);
 
-        enemies = new Enemies(assets);
+        enemy = new Enemy(assets);
 
         grassMap = new GrassMap(assets);
         boulder = new BoulderWall(assets, 0, 0);
@@ -69,14 +53,14 @@ public class Level {
 
         tankController.update(); // слушатель кнопок, вызывает методы передвижения танка
 
-        enemies.update();
+        enemy.update();
         bulletsHandler.update();
         boulder.update();
 
         batch.begin();
         grassMap.render(batch);
         playerTank.render(batch);
-        enemies.render(batch);
+        enemy.render(batch);
         boulder.render(batch);
         bulletsHandler.render(batch);
         batch.end();
@@ -91,5 +75,5 @@ public class Level {
     public void dispose() {
         batch.dispose();
         assets.dispose();
-    }
+    }*/
 }

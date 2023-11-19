@@ -1,221 +1,115 @@
 package com.rat6.game.game_objects.tank;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.rat6.game.Assets;
+import com.rat6.game.game_objects.bullet.Bullet;
 import com.rat6.game.game_objects.bullet.BulletsHandler;
 import com.rat6.game.game_objects.GameObject;
-import com.rat6.game.game_objects.tank.enums.TankDirection;
-import com.rat6.game.game_objects.tank.enums.TankState;
+import com.rat6.game.game_objects.ObjectDirection;
+import com.rat6.game.game_objects.ObjectState;
+import com.rat6.game.world.World;
+
+import java.util.List;
+import java.util.UUID;
 
 public class Tank extends GameObject {
-    private TextureRegion[] tankR, tankL, tankU, tankD;
-    protected TextureRegion[] tankRShots, tankLShots, tankUShots, tankDShots;
-
-    private Animation<TextureRegion> animationR, animationL, animationU, animationD;
-
-    private Vector2 center;
-    private float speed;
-    private Rectangle boundingBox;
-    private TextureRegion frame;
-    protected TankState state = TankState.IDLE;
-    protected TankDirection direction = TankDirection.RIGHT;;
-    private float stateTime;
-
-    private ShootAnimator shootAnimator;
     private Assets assets;
+    private World world;
+    private TankAnimator tankAnimator;
 
-    protected Tank(Assets assets, TextureRegion[] r, TextureRegion[] l, TextureRegion[] u, TextureRegion[] d,
-                   TextureRegion[] rShots, TextureRegion[] lShots, TextureRegion[] uShots, TextureRegion[] dShots,
-                   float x, float y, float speed
-    ) {
+    /**
+     * @x x-axis of center
+     * @y y-axis of center
+     * */
+    public Tank(World world, Assets assets, TankColor color, float x, float y, float speed) {
+        direction = ObjectDirection.RIGHT;
+
         this.assets = assets;
-        this.shootAnimator = new ShootAnimator(this);
-
-        this.tankR = r;
-        this.tankL = l;
-        this.tankU = u;
-        this.tankD = d;
-        this.tankRShots = rShots;
-        this.tankLShots = lShots;
-        this.tankUShots = uShots;
-        this.tankDShots = dShots;
-
-        // Инициализация других массивов анимаций, если есть
-
-        if(direction == TankDirection.RIGHT){
-            this.frame = r[0];
-        } else if(direction == TankDirection.LEFT){
-            this.frame = l[0];
-        } else if(direction == TankDirection.UP){
-            this.frame = u[0];
-        } else { // (direction == TankDirection.DOWN){}
-            this.frame = d[0];
-        }
-        float tankWidth = frame.getRegionWidth();
-        float tankHeight = frame.getRegionHeight();
-//        System.out.println("TANK: width=" + tankWidth + ", height=" + tankHeight);
-        this.center = new Vector2(x + tankWidth/2f, y + tankHeight/2f);
-
+        this.world = world;
         this.speed = speed;
-        this.boundingBox = new Rectangle(this.center.x, this.center.y, tankWidth, tankHeight);
+        this.velocity = world.getVelocity(direction, speed);
 
-        this.stateTime = 0;
+        this.tankAnimator = new TankAnimator(this, assets, color);
 
-        this.animationR = new Animation<TextureRegion>(0.2f, r);
-        this.animationL = new Animation<TextureRegion>(0.2f, l);
-        this.animationU = new Animation<TextureRegion>(0.2f, u);
-        this.animationD = new Animation<TextureRegion>(0.2f, d);
-        // Hello from android device
-        
+        circle(x, y, tankAnimator.RADIUS);
     }
 
-    public void moveLeft() {
-        if(state == TankState.DEAD){
+    public void shoot(){
+        if(state == ObjectState.DEAD){
             return;
         }
-        if(state == TankState.SHOOTING) {
+        if(state == ObjectState.SHOOTING) {
             return;
         }
-        center.x -= speed * Gdx.graphics.getDeltaTime();
-        state = TankState.MOVING_LEFT;
-        direction = TankDirection.LEFT;
+        state = ObjectState.SHOOTING;
+        tankAnimator.shootingAnimator.newShoot();
+
+        world.createBullet(this);
     }
 
-    public void moveRight() {
-        if(state == TankState.DEAD){
+    @Override
+    public void update(float deltaTime){
+        List<GameObject> objects = world.getInteractingObjects();
+
+
+        // Обновляем позицию, только если танк не уперся во что-нибудь
+        boolean isBumped = false;
+        if(state == ObjectState.MOVING){
+            Vector2 nextPosition = nextPosition(deltaTime);
+            for(GameObject gameObject: objects){
+                if(id == gameObject.id){
+//                System.out.println(id + ", " + gameObject.id);
+                    continue;
+                }
+                if(gameObject.overlap(new Circle(nextPosition.x, nextPosition.y, circle.radius))){
+                    isBumped = true;
+                    break;
+                }
+            }
+            if(world.isOutOfBounds(nextPosition, circle.radius)){
+                isBumped = true;
+            }
+            if(!isBumped){
+                circle.x = nextPosition.x;
+                circle.y = nextPosition.y;
+            }
+        }
+
+        // Bullet hits
+        int hits = world.bulletHit(this);
+        if(hits > 0){
+            state = ObjectState.DEAD;
             return;
         }
-        if(state == TankState.SHOOTING) {
-            return;
-        }
-        center.x += speed * Gdx.graphics.getDeltaTime();
-        state = TankState.MOVING_RIGHT;
-        direction = TankDirection.RIGHT;
+
+        tankAnimator.update(deltaTime);
     }
 
-    public void moveUp() {
-        if(state == TankState.DEAD){
-            return;
-        }
-        if(state == TankState.SHOOTING) {
-            return;
-        }
-        center.y += speed * Gdx.graphics.getDeltaTime();
-        state = TankState.MOVING_UP;
-        direction = TankDirection.UP;
+    public Vector2 nextPosition(float deltaTime){
+        velocity = world.getVelocity(direction, speed);
+        return new Vector2(circle.x + velocity.x * deltaTime, circle.y + velocity.y * deltaTime);
     }
-
-    public void moveDown() {
-        if(state == TankState.DEAD){
-            return;
-        }
-        if(state == TankState.SHOOTING) {
-            return;
-        }
-//        System.out.println(speed + ", " + speed * Gdx.graphics.getDeltaTime());
-        center.y -= speed * Gdx.graphics.getDeltaTime();
-        state = TankState.MOVING_DOWN;
-        direction = TankDirection.DOWN;
-    }
-
-    public void stopMoving(){
-        if(state == TankState.DEAD){
-            return;
-        }
-        if(state == TankState.SHOOTING) {
-            return;
-        }
-        state = TankState.IDLE;
-    }
-
-    public void shoot(BulletsHandler bulletsHandler){
-        if(state == TankState.DEAD){
-            return;
-        }
-        if(state == TankState.SHOOTING) {
-            return;
-        }
-        state = TankState.SHOOTING;
-        shootAnimator.shoot();
-
-        float bulletX = center.x; //(center.x - frame.getRegionWidth() / 2); // Начальная позиция X для пули
-        //+ frame.getRegionHeight()/8f не имеет значения, просто для красоты, дуло расположено не ровно по центру
-        float bulletY = center.y + frame.getRegionHeight()/8f; //direction==TankDirection.DOWN || direction==TankDirection.UP ? center.y : center.y + frame.getRegionHeight()/8;//(center.y - frame.getRegionHeight() / 2); // Начальная позиция Y для пули
-        bulletsHandler.createBullet(bulletX, bulletY, direction, 500f);
-    }
-
-    public void update(BulletsHandler bulletsHandler){
-        if(bulletsHandler.hit(boundingBox)){
-            state = TankState.DEAD;
-        }
-    }
-
+    @Override
     public void render(SpriteBatch batch) {
-        stateTime += Gdx.graphics.getDeltaTime();
+        TextureRegion frame = tankAnimator.getKeyFrame();
 
-        shootAnimator.update();
-
-        switch (state) {
-            case SHOOTING:
-                frame = shootAnimator.getKeyFrame();
-                break;
-            case MOVING_LEFT:
-                frame = animationL.getKeyFrame(stateTime, true);
-                break;
-            case MOVING_RIGHT:
-                frame = animationR.getKeyFrame(stateTime, true);
-                break;
-            case MOVING_UP:
-                frame = animationU.getKeyFrame(stateTime, true);
-                break;
-            case MOVING_DOWN:
-                frame = animationD.getKeyFrame(stateTime, true);
-                break;
-            case DEAD:
-                frame = destroyedFrame();
-                break;
-            case IDLE:
-                // анимация для состояния IDLE (например, стоит на месте)
-                break;
-        }
-
-        boundingBox.setWidth(frame.getRegionWidth());
-        boundingBox.setHeight(frame.getRegionHeight());
-        boundingBox.setPosition(center.x - frame.getRegionWidth()/2f, center.y - frame.getRegionHeight()/2f);
-
-        if(direction == TankDirection.LEFT){
+        if(direction == ObjectDirection.LEFT){
             // frame.getRegionWidth() / 6f не имеет строгого значения и нужен потому, что текстурка ассиметричная и немного смещена
-            batch.draw(frame, center.x - frame.getRegionWidth() / 2f - frame.getRegionWidth() / 6f, center.y - frame.getRegionHeight() / 2f);
+            batch.draw(frame, circle.x - frame.getRegionWidth() / 2f - frame.getRegionWidth() / 6f, circle.y - frame.getRegionHeight() / 2f);
         }
-        else if(direction == TankDirection.RIGHT){
+        else if(direction == ObjectDirection.RIGHT){
             // frame.getRegionWidth() / 6f не имеет строгого значения и нужен потому, что текстурка ассиметричная и немного смещена
-            batch.draw(frame, center.x - frame.getRegionWidth() / 2f + frame.getRegionWidth() / 6f, center.y - frame.getRegionHeight() / 2f);
+            batch.draw(frame, circle.x - frame.getRegionWidth() / 2f + frame.getRegionWidth() / 6f, circle.y - frame.getRegionHeight() / 2f);
         }
         else {
-            batch.draw(frame, center.x - frame.getRegionWidth() / 2f, center.y - frame.getRegionHeight() / 2f);
+            batch.draw(frame, circle.x - frame.getRegionWidth() / 2f, circle.y - frame.getRegionHeight() / 2f);
         }
     }
 
-    public Rectangle getBoundingBox() {
-        return boundingBox;
-    }
 
-    public TextureRegion destroyedFrame(){
-        switch (direction) {
-            case LEFT:
-                return assets.destroyedTankL;
-            case RIGHT:
-                return assets.destroyedTankR;
-            case UP:
-                return assets.destroyedTankU;
-            case DOWN:
-                return assets.destroyedTankD;
-        }
-        return null;
-    }
 }

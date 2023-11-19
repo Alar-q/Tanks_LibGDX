@@ -2,9 +2,13 @@ package com.rat6.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rat6.game.world.StandardWorld;
@@ -13,7 +17,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	public static final float 	WORLD_WIDTH = 960,
 								WORLD_HEIGHT = 640;
 
-	public static Assets assets;
+	public Assets assets;
 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
@@ -33,7 +37,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		assets = new Assets();
 
-		standardWorld = new StandardWorld();
+		standardWorld = new StandardWorld(assets);
 	}
 
 	@Override
@@ -44,10 +48,18 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		standardWorld.update();
+		standardWorld.update(Gdx.graphics.getDeltaTime());
 
 		batch.begin();
 		standardWorld.render(batch);
+
+		// Начните рисовать круг
+//		Circl/e circle = standardWorld.tanks.get(0).circle; // Замените yourCircleObject на ваш объект Circle
+//		batch.draw(assets.cannonball, circle.x-circle.radius, circle.y-circle.radius, circle.radius*2, circle.radius*2); // Отрисуйте круг
+//
+//		Circle circleB = standardWorld.boulders.get(0).circle; // Замените yourCircleObject на ваш объект Circle
+//		batch.draw(assets.cannonball, circleB.x - circleB.radius, circleB.y - circleB.radius, circleB.radius*2, circleB.radius*2); // Отрисуйте круг
+
 		batch.end();
 	}
 
