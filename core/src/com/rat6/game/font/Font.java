@@ -45,6 +45,17 @@ public class Font {
         }
     }
 
+    public void drawText(SpriteBatch batch, String text, float x, float y, float scale) {
+        int len = text.length();
+        for(int i = 0; i < len; i++) {
+            int c = text.charAt(i) - ' ';
+            if(c < 0 || c > glyphs.length - 1)
+                continue;
+            TextureRegion glyph = glyphs[c];
+            batch.draw(glyph, x + glyphWidth * scale * i, y, glyphWidth * scale , glyphHeight * scale);
+        }
+    }
+
     public void drawText(SpriteBatch batch, String text, Rectangle rect) {
         int len = text.length();
         float totalWidth = glyphWidth * len;
@@ -59,4 +70,7 @@ public class Font {
             batch.draw(glyph, startX + glyphWidth * i, startY, glyphWidth, glyphHeight);
         }
     }
+
+
+
 }

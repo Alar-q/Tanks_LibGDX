@@ -5,6 +5,7 @@ import static com.rat6.game.MyGdxGame.WORLD_WIDTH;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.rat6.game.Assets;
+import com.rat6.game.game_objects.ObjectState;
 import com.rat6.game.game_objects.boulder.Boulder;
 import com.rat6.game.game_objects.bullet.Bullet;
 import com.rat6.game.game_objects.explosion.Explosion;
@@ -105,7 +106,7 @@ public class StandardWorld extends World {
                 }
                 tanksIterator.remove();
             } else {
-                hasBlue = tank.color == TankColor.BLUE;
+                hasBlue = tank.color == TankColor.BLUE && tank.state != ObjectState.DEAD;
             }
         }
         gameOver = !hasBlue;

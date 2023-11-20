@@ -84,7 +84,7 @@ You can install this APK file on any Android device that allows installation fro
 ## Deploy Web
 
 ```sh
-$ gradlew html:dist
+$ ./gradlew html:dist
 ```
 This will compile your app to Javascript and place the resulting 
 Javascript, HTML and asset files in the `html/build/dist/` folder. 

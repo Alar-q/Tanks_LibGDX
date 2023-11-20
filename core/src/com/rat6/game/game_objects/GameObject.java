@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import java.util.UUID;
 
 /**
  * Rectangle position represents left lower corner, while in Circle position is centre
@@ -16,7 +15,7 @@ public abstract class GameObject {
         CIRCLE,
         RECTANGLE
     }
-    public UUID id;
+    public int id;
 
     public Shape shape;
     public Circle circle;
@@ -28,7 +27,7 @@ public abstract class GameObject {
     public Vector2 velocity;
 
     public GameObject(){
-        id = UUID.randomUUID();
+        id = (int)(Math.random() * 1000000);
         state = ObjectState.STANDING;
         direction = ObjectDirection.UNDEFINED;
     }

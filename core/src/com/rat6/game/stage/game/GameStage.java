@@ -6,6 +6,7 @@ import static com.rat6.game.MyGdxGame.WORLD_WIDTH;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.rat6.game.Assets;
 import com.rat6.game.MyGdxGame;
 import com.rat6.game.TouchInputProcessor;
@@ -60,11 +61,15 @@ public class GameStage {
         settingsButtons.add(new SettingsButton(assets, "exit", WORLD_WIDTH/2f - 192/2f, 400 - 96*3).setInputProcessor(inputProcessor).onTouch(()->{myGdxGame.setStage(Stage.MENU);}));
     }
     public void update(float deltaTime){
+        if(standardWorld.gameOver){
+            onPause = true;
+        }
         pauseButton.update();
         if(!onPause){
             standardWorld.update(deltaTime);
         } else {
-            for(SettingsButton button: settingsButtons){
+            for(int i=standardWorld.gameOver?1:0; i<settingsButtons.size(); i++){
+                SettingsButton button = settingsButtons.get(i);
                 button.update();
             }
         }
@@ -75,9 +80,13 @@ public class GameStage {
         assets.font.drawText(batch, ""+standardWorld.score, WORLD_WIDTH-50, WORLD_HEIGHT-50);
         if(onPause){
             batch.draw(assets.blur, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
-            for(SettingsButton button: settingsButtons){
+            for(int i=standardWorld.gameOver?1:0; i<settingsButtons.size(); i++){
+                SettingsButton button = settingsButtons.get(i);
                 button.render(batch);
             }
+        }
+        if(standardWorld.gameOver){
+            assets.font.drawText(batch, "Game Over", WORLD_WIDTH/5, 450, 4);
         }
 		/*for(Tank tank: standardWorld.tanks){
 			Circle circle = tank.circle; // Замените yourCircleObject на ваш объект Circle
