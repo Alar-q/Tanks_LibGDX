@@ -1,21 +1,16 @@
 package com.rat6.game.game_objects.tank;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.rat6.game.Assets;
-import com.rat6.game.game_objects.bullet.Bullet;
-import com.rat6.game.game_objects.bullet.BulletsHandler;
 import com.rat6.game.game_objects.GameObject;
 import com.rat6.game.game_objects.ObjectDirection;
 import com.rat6.game.game_objects.ObjectState;
 import com.rat6.game.world.World;
 
 import java.util.List;
-import java.util.UUID;
 
 public class Tank extends GameObject {
     private Assets assets;
@@ -49,6 +44,8 @@ public class Tank extends GameObject {
         }
         state = ObjectState.SHOOTING;
         tankAnimator.shootingAnimator.newShoot();
+
+        assets.playSound(assets.tank_shotSound);
 
         world.createBullet(this);
     }
@@ -86,6 +83,9 @@ public class Tank extends GameObject {
         health -= hits;
         if(health <= 0){
             state = ObjectState.DEAD;
+        }
+        if(hits > 0){
+            assets.playSound(assets.explosionSound);
         }
 
         tankAnimator.update(deltaTime);

@@ -11,13 +11,14 @@ import com.rat6.game.game_objects.bullet.BulletsHandler;
 import com.rat6.game.world.World;
 
 public class Boulder extends GameObject {
-
+    private Assets assets;
     private World world;
     private TextureRegion[] boulders;
     private int destructionPhase;
     private float reduction = 0.8f;
     public Boulder(World world, Assets assets, float x, float y) {
         this.world = world;
+        this.assets = assets;
         this.destructionPhase = 0;
         this.boulders = assets.boulders;
         circle(
@@ -36,6 +37,9 @@ public class Boulder extends GameObject {
     public void update(float deltaTime) {
         int hits = world.bulletHit(this);
        destructionPhase+=hits;
+       if(hits > 0){
+           assets.playSound(assets.explosionSound);
+       }
     }
 
     @Override

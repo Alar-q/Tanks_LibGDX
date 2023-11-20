@@ -16,13 +16,16 @@ import java.util.Iterator;
 import java.util.List;
 
 public class BulletsHandler {
+    private Assets assets;
     private List<Bullet> bullets;
     private World world;
 
-    public BulletsHandler(World world, List<Bullet> bullets) {
+    public BulletsHandler(World world, Assets assets, List<Bullet> bullets) {
+        this.assets = assets;
         this.world = world;
         this.bullets = bullets;
     }
+
 
     public void update(float deltaTime) {
         Iterator<Bullet> iterator = bullets.iterator();
@@ -50,6 +53,9 @@ public class BulletsHandler {
                     world.createExplosion(b2.circle.x, b2.circle.y, false);
                 }
             }
+        }
+        if(toRemove.size() > 0){
+            assets.playSound(assets.bulletsCollision);
         }
         bullets.removeAll(toRemove);
     }

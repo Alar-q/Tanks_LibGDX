@@ -1,5 +1,7 @@
 package com.rat6.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -37,9 +39,10 @@ public class Assets {
                             destroyedTankU,
                             destroyedTankD;
 
-    public  TextureRegion controller, controllerShotButton, controllerPauseButton;
+    public  TextureRegion controller, controllerShotButton, pauseButton;
 
     public  TextureRegion cannonball;
+    public  TextureRegion blur;
 
     public  TextureRegion turf;
     public  TextureRegion[] shabby_turfs;
@@ -53,10 +56,23 @@ public class Assets {
     public  TextureRegion slider;
     public  TextureRegion[] menuButtons;
 
-    public Sound    shot,
-                    explosion,
-                    tank_shot,
-                    click;
+    public boolean mute = false;
+    public void mute_toggle() {
+        mute = !mute;
+        if (mute) {
+            lastVolume = volume;
+            setVolume(0);
+        } else {
+            setVolume(lastVolume);
+        }
+    }
+    public float lastVolume, volume = 1.0f; // Начальная громкость (1.0 - максимальная громкость)
+    public Music kalinkaMusic;
+    public Sound    explosionSound,
+                    tank_shotSound,
+                    boulderSound,
+                    bulletsCollision,
+                    clickSound;
 
     public Font font;
     public Assets(){
@@ -75,9 +91,10 @@ public class Assets {
 
         controller              = new TextureRegion(atlas, 640, 0,   96, 96);
         controllerShotButton    = new TextureRegion(atlas, 640, 96,  32, 32);
-        controllerPauseButton   = new TextureRegion(atlas, 672, 96,  32, 32);
+        pauseButton = new TextureRegion(atlas, 672, 96,  32, 32);
 
         cannonball              = new TextureRegion(atlas, 640, 128, 16, 16);
+        blur              = new TextureRegion(atlas, 640, 144, 64, 64);
 
         slider          = new TextureRegion(atlas, 0,  1440, 64, 64);
         scrollBarRed    = new TextureRegion(atlas, 0,  1504, 192, 64);
@@ -88,10 +105,14 @@ public class Assets {
                 new TextureRegion(atlas, 192,  1376,192 , 96),
         };
 
-//        shot        = Gdx.audio.newSound(Gdx.files.internal("shot.ogg"));
-//        explosion   = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
-//        tank_shot   = Gdx.audio.newSound(Gdx.files.internal("tank_shot.ogg"));
-//        click       = Gdx.audio.newSound(Gdx.files.internal("click.ogg"));
+        kalinkaMusic = Gdx.audio.newMusic(Gdx.files.internal("kalinka.mp3"));
+        explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.mp3"));
+        tank_shotSound = Gdx.audio.newSound(Gdx.files.internal("tank_shot.mp3"));
+        clickSound = Gdx.audio.newSound(Gdx.files.internal("click.mp3"));
+        boulderSound = Gdx.audio.newSound(Gdx.files.internal("boulder.mp3"));
+        bulletsCollision = Gdx.audio.newSound(Gdx.files.internal("bulletsCollision.mp3"));
+
+        playMusic(kalinkaMusic);
 
         font = new Font(atlas, 736, 0, 16, 16, 20);
     }
@@ -126,11 +147,22 @@ public class Assets {
         };
 
     }
-
-    public void playSound(Sound sound){
-        if(true) {
-            sound.play(1.0f);
+    public void playMusic(Music music) {
+        if (music != null) {
+            music.setLooping(true);
+            music.setVolume(volume/2f);
+            music.play();
         }
+    }
+    public void playSound(Sound sound){
+        if(sound != null) {
+            sound.play(volume);
+        }
+    }
+
+    public void setVolume(float volume){
+        this.volume = volume;
+        kalinkaMusic.setVolume(volume);
     }
 
     private void loadDestroyedTank(){
@@ -189,5 +221,6 @@ public class Assets {
 
     public void dispose(){
         atlas.dispose();
+        kalinkaMusic.dispose();
     }
 }

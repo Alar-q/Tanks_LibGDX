@@ -31,13 +31,13 @@ public class MenuStage {
         menuButtons.add(new MenuButton(assets, "2 Player", startX + 192, 120)
                 .setInputProcessor(inputProcessor)
                 .onTouch(()->{
-//                    myGdxGame.setStage(Stage.GAME);
+                    myGdxGame.setStage(Stage.MULTI_GAME);
                 })
         );
         menuButtons.add(new MenuButton(assets, "settings", startX + 192, 120 - 92)
                 .setInputProcessor(inputProcessor)
                 .onTouch(()->{
-//                    myGdxGame.setStage(Stage.GAME);
+                    myGdxGame.setStage(Stage.SETTINGS);
                 })
         );
         menuButtons.add(new MenuButton(assets, "Online", startX + 192 * 2, 120)

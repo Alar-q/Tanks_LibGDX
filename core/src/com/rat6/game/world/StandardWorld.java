@@ -34,8 +34,14 @@ public class StandardWorld extends World {
     @Override
     public void update(float deltaTime){
         // слушатель кнопок, изменяет состояние танка
-        for(TankController tankController: tankControllers){
+
+        Iterator<TankController> tankControllersIterator = tankControllers.iterator();
+        while(tankControllersIterator.hasNext()){
+            TankController tankController = tankControllersIterator.next();
             tankController.update(deltaTime);
+            if(tankController.tank.isRuined()){
+                tankControllersIterator.remove();
+            }
         }
 
         bulletsHandler.update(deltaTime);

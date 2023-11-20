@@ -3,6 +3,7 @@ package com.rat6.game.font;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Font {
     public final Texture texture;
@@ -41,6 +42,21 @@ public class Font {
                 continue;
             TextureRegion glyph = glyphs[c];
             batch.draw(glyph, x + glyphWidth * i, y, glyphWidth, glyphHeight);
+        }
+    }
+
+    public void drawText(SpriteBatch batch, String text, Rectangle rect) {
+        int len = text.length();
+        float totalWidth = glyphWidth * len;
+        float startX = rect.x + (rect.width - totalWidth) / 2;
+        float startY = rect.y + (rect.height - glyphHeight) / 2;
+
+        for(int i = 0; i < len; i++) {
+            int c = text.charAt(i) - ' ';
+            if(c < 0 || c > glyphs.length - 1)
+                continue;
+            TextureRegion glyph = glyphs[c];
+            batch.draw(glyph, startX + glyphWidth * i, startY, glyphWidth, glyphHeight);
         }
     }
 }

@@ -42,7 +42,7 @@ public abstract class World {
         tanks = new ArrayList<>();
 
         bullets = new ArrayList<>();
-        bulletsHandler = new BulletsHandler(this, bullets);
+        bulletsHandler = new BulletsHandler(this, assets, bullets);
 
         boulders = new ArrayList<>();
 

@@ -7,13 +7,14 @@ import com.rat6.game.game_objects.GameObject;
 import com.rat6.game.world.World;
 
 public class Headquarters extends GameObject {
-
+    private Assets assets;
     private World world;
     private TextureRegion[] headquarters;
     private int health = 1;
     private float reduction = 0.8f;
 
     public Headquarters(World world, Assets assets, float x, float y) {
+        this.assets = assets;
         this.world = world;
         this.headquarters = assets.headquarters;
         circle(
@@ -32,6 +33,9 @@ public class Headquarters extends GameObject {
     public void update(float deltaTime) {
         int hits = world.bulletHit(this);
         health-=hits;
+        if(hits > 0){
+            assets.playSound(assets.explosionSound);
+        }
     }
 
     @Override

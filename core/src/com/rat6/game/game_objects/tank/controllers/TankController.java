@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.rat6.game.game_objects.tank.Tank;
 
 public abstract class TankController {
-    protected Tank tank;
+    public Tank tank;
     public TankController(Tank tank){
         this.tank = tank;
     }

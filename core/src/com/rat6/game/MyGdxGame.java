@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rat6.game.stage.Stage;
 import com.rat6.game.stage.game.GameStage;
 import com.rat6.game.stage.menu.MenuStage;
+import com.rat6.game.stage.multiplayer.MultiplayerStage;
+import com.rat6.game.stage.settings.SettingsStage;
 
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -27,6 +29,9 @@ public class MyGdxGame extends ApplicationAdapter {
 	private Stage stage;
 	private GameStage gameStage;
 	private MenuStage menuStage;
+	private SettingsStage settingsStage;
+	private MultiplayerStage multiplayerStage;
+
 	public TouchInputProcessor inputProcessor;
 
 	@Override
@@ -47,6 +52,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		stage = Stage.MENU;
 		gameStage = new GameStage(this, assets, inputProcessor);
 		menuStage = new MenuStage(this, assets, inputProcessor);
+		settingsStage = new SettingsStage(this, assets, inputProcessor);
+		multiplayerStage = new MultiplayerStage(this, assets, inputProcessor);
 
 		Application.ApplicationType appType = Gdx.app.getType();
 		System.out.println(appType);
@@ -66,6 +73,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		else if(stage == Stage.SINGLE_GAME){
 			gameStage.update(Gdx.graphics.getDeltaTime());
 		}
+		else if(stage == Stage.SETTINGS) {
+			settingsStage.update(Gdx.graphics.getDeltaTime());
+		}
+		else if(stage == Stage.MULTI_GAME) {
+			multiplayerStage.update(Gdx.graphics.getDeltaTime());
+		}
 
 		batch.begin();
 
@@ -75,6 +88,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		else if(stage == Stage.SINGLE_GAME){
 			gameStage.render(batch);
 		}
+		else if(stage == Stage.SETTINGS){
+			settingsStage.render(batch);
+		}
+		else if(stage == Stage.MULTI_GAME){
+			multiplayerStage.render(batch);
+		}
 
 		batch.end();
 	}
@@ -83,6 +102,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		this.stage = stage;
 		gameStage = new GameStage(this, assets, inputProcessor);
 		menuStage = new MenuStage(this, assets, inputProcessor);
+		settingsStage = new SettingsStage(this, assets, inputProcessor);
+		multiplayerStage = new MultiplayerStage(this, assets, inputProcessor);
 	}
 
 	@Override

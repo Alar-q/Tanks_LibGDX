@@ -45,7 +45,7 @@ public class DisplayController extends TankController {
     public DisplayController build(){
         this.controller = assets.controller;
         this.controllerShotButton = assets.controllerShotButton;
-        this.controllerPauseButton = assets.controllerPauseButton;
+        this.controllerPauseButton = assets.pauseButton;
 
         width = controller.getRegionWidth();
         height = controller.getRegionHeight();
