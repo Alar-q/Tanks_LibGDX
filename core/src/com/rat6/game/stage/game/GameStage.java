@@ -24,7 +24,7 @@ public class GameStage {
     private MyGdxGame myGdxGame;
     private TouchInputProcessor inputProcessor;
     private Assets assets;
-    private StandardWorld standardWorld;
+    protected StandardWorld standardWorld;
     private PauseButton pauseButton;
     private boolean onPause = false;
     private List<SettingsButton> settingsButtons;
@@ -72,6 +72,7 @@ public class GameStage {
     public void render(SpriteBatch batch){
         standardWorld.render(batch);
         pauseButton.render(batch);
+        assets.font.drawText(batch, ""+standardWorld.score, WORLD_WIDTH-50, WORLD_HEIGHT-50);
         if(onPause){
             batch.draw(assets.blur, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
             for(SettingsButton button: settingsButtons){

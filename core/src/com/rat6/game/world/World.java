@@ -73,7 +73,7 @@ public abstract class World {
         TextureRegion bulletTexture = assets.cannonball;
         Vector2 velocity = getVelocity(tank.direction, 500f);
         //+ tank.circle.radius/4f не имеет значения, просто для красоты, так как дуло расположено не ровно по центру
-        Bullet newBullet = new Bullet(this, tank.id, bulletTexture,
+        Bullet newBullet = new Bullet(this, tank, bulletTexture,
                 tank.circle.x,
                 tank.circle.y + tank.circle.radius/4f,
                 velocity.x,
@@ -136,6 +136,11 @@ public abstract class World {
         List<Bullet> toRemove = new ArrayList<>();
         for (int i = 0; i < bullets.size(); i++) {
             Bullet b1 = bullets.get(i);
+            if(gameObject instanceof Tank){
+                if(b1.color == ((Tank)gameObject).color){
+                    continue;
+                }
+            }
             if(b1.id == gameObject.id){
                 continue;
             }

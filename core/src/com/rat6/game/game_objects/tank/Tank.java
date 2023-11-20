@@ -14,6 +14,7 @@ import java.util.List;
 
 public class Tank extends GameObject {
     private Assets assets;
+    public TankColor color;
     private World world;
     private TankAnimator tankAnimator;
     private int health = 1;
@@ -24,6 +25,7 @@ public class Tank extends GameObject {
      * */
     public Tank(World world, Assets assets, TankColor color, float x, float y, float speed) {
         direction = ObjectDirection.RIGHT;
+        this.color = color;
 
         this.assets = assets;
         this.world = world;
