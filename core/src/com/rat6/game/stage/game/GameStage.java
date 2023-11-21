@@ -38,8 +38,9 @@ public class GameStage {
 
         Tank playerTank = standardWorld.createTank(TankColor.BLUE, 100, 100);
         standardWorld.addTankController(new KeyboardController(playerTank));
+
         // Display Controller
-        if(!Gdx.app.getType().equals(Application.ApplicationType.Desktop)){
+        if(Gdx.app.getType().equals(Application.ApplicationType.Android)){
             standardWorld.addTankController(new DisplayController(playerTank)
                     .setInputProcessor(inputProcessor)
                     .setAssets(assets)
