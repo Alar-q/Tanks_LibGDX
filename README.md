@@ -24,9 +24,9 @@ but also provides a solid foundation for further research and development in gam
 ## Demonstrations
 Gameplay screenshots
 ![Menu](https://github.com/Alar-q/Tanks_LibGDX/blob/main/presentation/Picture1.png)
-![OnPause](https://github.com/Alar-q/Tanks_LibGDX/blob/main/presentation/Picture1.png)
-![Game](https://github.com/Alar-q/Tanks_LibGDX/blob/main/presentation/Picture1.png)
-![GameOver](https://github.com/Alar-q/Tanks_LibGDX/blob/main/presentation/Picture1.png)
+![OnPause](https://github.com/Alar-q/Tanks_LibGDX/blob/main/presentation/Picture2.png)
+![Game](https://github.com/Alar-q/Tanks_LibGDX/blob/main/presentation/Picture3.png)
+![GameOver](https://github.com/Alar-q/Tanks_LibGDX/blob/main/presentation/Picture4.png)
 
 
 ## Technologies
