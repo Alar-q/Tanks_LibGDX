@@ -25,7 +25,10 @@ public class StandardWorld extends World {
     private Random random;
     private GameMap grassMap;
 
+    // I guess it is not the best solution of realisation
     public int score = 0;
+
+    // As well as this
     public boolean gameOver = false;
 
     public StandardWorld(Assets assets) {

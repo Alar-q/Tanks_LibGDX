@@ -5,6 +5,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
+/**
+ * The Font class implemented in LibGDX.
+ * The reason I use it that way is because I didn't have much time,
+ * so I did it as fast as I could.
+ * */
 public class Font {
     public final Texture texture;
     public final int glyphWidth;
@@ -35,14 +40,7 @@ public class Font {
     }
 
     public void drawText(SpriteBatch batch, String text, float x, float y) {
-        int len = text.length();
-        for(int i = 0; i < len; i++) {
-            int c = text.charAt(i) - ' ';
-            if(c < 0 || c > glyphs.length - 1)
-                continue;
-            TextureRegion glyph = glyphs[c];
-            batch.draw(glyph, x + glyphWidth * i, y, glyphWidth, glyphHeight);
-        }
+        drawText(batch, text, x, y, 1f);
     }
 
     public void drawText(SpriteBatch batch, String text, float x, float y, float scale) {
@@ -56,6 +54,10 @@ public class Font {
         }
     }
 
+
+    /**
+     * Text in the center of the Rectangle
+     * */
     public void drawText(SpriteBatch batch, String text, Rectangle rect) {
         int len = text.length();
         float totalWidth = glyphWidth * len;

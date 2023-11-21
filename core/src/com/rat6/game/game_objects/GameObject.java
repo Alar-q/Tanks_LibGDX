@@ -8,7 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 
 
 /**
- * Rectangle position represents left lower corner, while in Circle position is centre
+ * Rectangle position represents left lower corner, while in Circle position is centre.
+ * I always used Circles because of the fucking misalignment of rendering and real coordinates.
  * */
 public abstract class GameObject {
     public enum Shape {

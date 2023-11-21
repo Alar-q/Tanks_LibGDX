@@ -14,7 +14,18 @@ import com.rat6.game.stage.menu.MenuStage;
 import com.rat6.game.stage.multiplayer.MultiplayerStage;
 import com.rat6.game.stage.settings.SettingsStage;
 
-
+/**
+ * I know that the Stages principle was originally implemented in LibGDX and does not work that way.
+ * The reason I did it this way is because I didn't have much time, so I did it as fast as I could.
+ *
+ * I wanted to realise online game as well.
+ * In the end I did not implement Online.
+ * There is uncomplicated way to realise it with Socket.IO
+ * (https://www.youtube.com/watch?v=uIPAaDslhPM&list=RDCMUCO9JvZ75Usyzgd1puurLF6A&start_radio=1&rv=uIPAaDslhPM&t=1).
+ * I've been thinking about synchronisation, but I haven't figured out how to implement it properly yet.
+ * It seems the best solution would be to keep all game state on the server,
+ * players would only send controller information. But, there was no time to re-implement the game on the server.
+ * */
 public class MyGdxGame extends ApplicationAdapter {
 
 	public static final float 	WORLD_WIDTH = 960,

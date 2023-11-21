@@ -21,11 +21,17 @@ import com.rat6.game.world.StandardWorld;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * То же самое что и Single Player, Game Stage, только добавляем контроллер WASD+F.
+ * The same as GameStage class (Single Player), but with additional WASD+F controller.
+ * */
 public class MultiplayerStage extends GameStage {
 
     public MultiplayerStage(MyGdxGame myGdxGame, Assets assets, TouchInputProcessor inputProcessor){
         super(myGdxGame, assets, inputProcessor);
+
         Tank playerTank2 = standardWorld.createTank(TankColor.BLUE, 700, 100);
         standardWorld.addTankController(new KeyboardControllerWASD(playerTank2));
     }
+
 }

@@ -4,18 +4,19 @@
 
 
 ## Project Description
-The project "Tanks_LibGDX" is a coursework 
-developed as part of an educational programme at AITU. 
-It is a game inspired by the classic 
+
+The project "Tanks_LibGDX" is a coursework
+developed as part of an educational programme at AITU.
+It is a game inspired by the classic
 game "Tanks 1990" and it is based on [LibGDX](https://libgdx.com/wiki/).
 
-The project aims to create a clone version of the popular 
-video game "Tanks 1990", based on the LibGDX, a powerful game 
-development framework. The project offers a complete package for developing, 
-testing and deploying the game on a variety of platforms 
+The project aims to create a clone version of the popular
+video game "Tanks 1990", based on the LibGDX, a powerful game
+development framework. The project offers a complete package for developing,
+testing and deploying the game on a variety of platforms
 including Windows, Linux, Mac OS X, Android and Web Browser.
 
-"Talks_LibGDX" not only showcases the technical skills of the development team, 
+"Talks_LibGDX" not only showcases the technical skills of the development team,
 but also provides a solid foundation for further research and development in game programming.
 
 
@@ -32,6 +33,7 @@ Gameplay screenshots
 
 
 ## Getting Started
+
 These instructions will help you start and run a copy of the project 
 on your local computer for development and testing purposes.
 
@@ -42,8 +44,13 @@ $ git clone https://github.com/Alar-q/Tanks_LibGDX.git
 $ cd ./Tanks_LibGDX
 ```
 
+## Deploy
 
-## Deploy to Windows/Linux/Mac OS X as JAR file
+Tried everything, except for IOS, everything works.
+
+Reference: [Deploying your application](https://libgdx.com/wiki/deployment/deploying-your-application)
+
+### Deploy to Windows/Linux/Mac OS X as JAR file
 
 The easiest way to deploy to Windows/Linux/Mac is to create a runnable JAR file. 
 
@@ -66,7 +73,7 @@ Distributing java applications as JAR file can be very unhandy.
 A very convenient way to distribute java application is to just bundle an JRE. [Bundling a JRE](https://libgdx.com/wiki/deployment/bundling-a-jre).
 
 
-## Deploy to Android
+### Deploy to Android
 
 ```sh
 $ ./gradlew android:assembleRelease
@@ -81,7 +88,7 @@ you only need to follow the steps for keytool and jarsigner.
 You can install this APK file on any Android device that allows installation from unknown sources.
 
 
-## Deploy Web
+### Deploy Web
 
 ```sh
 $ ./gradlew html:dist
@@ -110,6 +117,21 @@ $ npm install http-server -g
 $ http-server html/build/dist 
 ```
 and browse at http://localhost:8080. docs
+
+
+## About Online
+
+I wanted to realise online game as well.
+In the end I did not implement Online.
+There is uncomplicated way to realise it with Socket.IO
+[Multiplayer Games with LibGDX and NodeJS](https://www.youtube.com/watch?v=uIPAaDslhPM&list=RDCMUCO9JvZ75Usyzgd1puurLF6A&start_radio=1&rv=uIPAaDslhPM&t=1).
+I've been thinking about synchronisation, but I haven't figured out how to implement it properly yet.
+It seems the best solution would be to keep all game state on the server,
+players would only send controller information. But, there was no time to re-implement the game on the server.
+
+
+## Resources
+[Battalion Modern](https://www.spriters-resource.com/pc_computer/battalionmodern/)
 
 
 ## Authors
